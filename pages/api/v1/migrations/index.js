@@ -3,7 +3,7 @@ import { join } from "node:path";
 import database from "infra/database.js";
 
 export default async function migrations(request, response) {
-  if (!["GET", "POST"].contains(request.method)) {
+  if (!["GET", "POST"].includes(request.method)) {
     return response.status(405);
   }
 
@@ -20,7 +20,6 @@ export default async function migrations(request, response) {
 
     if (request.method === "GET") {
       const pendingMigrations = await migrationRunner(defaultMigrationOptions);
-      await dbClient.end();
       return response.status(200).json(pendingMigrations);
     }
 
