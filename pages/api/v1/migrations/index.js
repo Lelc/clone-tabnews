@@ -6,9 +6,9 @@ export default async function migrations(request, response) {
   if (!["GET", "POST"].includes(request.method)) {
     return response.status(405);
   }
-
+  let dbClient;
   try {
-    const dbClient = await database.getNewClient();
+    dbClient = await database.getNewClient();
     const defaultMigrationOptions = {
       dbClient: dbClient,
       dryRun: true,
